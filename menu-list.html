@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategori Listesi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #f4f4f4;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+        }
+
+        .menu-list {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Kategori Listesi</header>
+
+    <div class="menu-list" id="menuList">
+        <!-- İçerik dinamik olarak doldurulacak -->
+    </div>
+
+    <button onclick="geriDon()">Geri Dön</button>
+
+    <script>
+        // URL'den kategori bilgisini alıyoruz
+        const urlParams = new URLSearchParams(window.location.search);
+        const kategori = urlParams.get('kategori');
+        
+        // Menü öğeleri
+    const menuler = {
+        daily: {
+            items: [
+                "20. Vejeteryan yemek - 12.90 €",
+                "21. Etli Yemek - 12.90 €"
+            ],
+            icon: "images/daily.jpg"
+        },
+        soups: {
+            items: [
+                "10. Mercimek - 6.00 €",
+                "11. Kelle Paca - 7.50 €",
+                "12. Tavuk - 7.50 €",
+                "14. İşkembe - 7.50 €"
+            ],
+            icon: "images/corbalar.jpg"
+        },
+        mezeler: {
+            items: [
+                "30. Küçük 4 çeşit - 7.90 €",
+                "31. Büyük 6 çeşit - 9.90 €",
+                "32. Sıcak Soğuk Küçük - 11.90 €",
+                "33. Sıcak Soğuk Büyük - 14.90 €",
+                "34. İçli Köfte 2 adet - 7.40 €",
+                "35. Sigara Böreği 4 adet - 6.40 €",
+                "36. Sarma 5 adet - 6.40 €"
+            ],
+            icon: "images/mezeler.jpg"
+        },
+        juices: {
+            items: [
+                "270. Küçük 4 çeşit - 7.90 €",
+                "271. Büyük 6 çeşit - 9.90 €",
+                "272. Sıcak Soğuk Küçük - 11.90 €",
+                "273. Sıcak Soğuk Büyük - 14.90 €",
+                "274. İçli Köfte 2 adet - 7.40 €",
+                "275. Sigara Böreği 4 adet - 6.40 €",
+                "276. Sarma 5 adet - 6.40 €"
+            ],
+            icon: "images/juices.jpg"
+        },
+        salatalar: {
+            items: [
+                "40. Küçük 4 çeşit - 7.90 €",
+                "41. Büyük 6 çeşit - 9.90 €",
+                "42. Sıcak Soğuk Küçük - 11.90 €",
+                "43. Sıcak Soğuk Büyük - 14.90 €",
+                "44. İçli Köfte 2 adet - 7.40 €",
+                "45. Sigara Böreği 4 adet - 6.40 €",
+                "46. Sarma 5 adet - 6.40 €"
+            ],
+            icon: "images/salatalar.jpg"
+        },
+        shisha: {
+            items: [
+                "350. Shisha Ananas - 18.90 €",
+                "351. Shisha Blackbox - 18.90 €",
+                "352. Shisha Redballs - 18.90 €",
+                "353. Shisha African Queen - 18.90 €",
+                "354. Shisha Blaubeere - 18.90 €",
+                "355. Shisha Orangenminze - 18.90 €",
+                "356. Shisha Falim - 18.90 €",
+                "357. Shisha Falimred - 18.90 €",
+                "358. Shisha White - 18.90 €",
+                "360. Shisha Pistazie Vanille mit Milch - 20.90 €",
+                "361. Shisha Lemon Lime - 18.90 €",
+                "362. Shisha Zitroneminze - 18.90 €",
+                "363. Shisha Minze - 18.90 €",
+                "364. Shisha Traubeminze - 18.90 €",
+                "365. Shisha Cold Peace - 18.90 €",
+                "366. Shisha Wildberrychill - 18.90 €",
+                "367. Shisha Green - 18.90 €",
+                "368. Shisha Icekaktus - 18.90 €",
+                "369. Shisha Ice Bonbon - 18.90 €",
+                "3701. Kopfwechsel - 10.90 €",
+                "371. Fruchtkopf - 30.90 €"
+            ],
+            icon: "images/nargile.jpg"
+        },
+        cocktails: {
+            items: [
+                "285. Ipanema - 7.50 €",
+                "286. Kiba - 7.50 €",
+                "287. Moskito - 7.50 €",
+                "288. Pina Colada - 7.50 €",
+                "289. Blue Ocean - 7.50 €",
+                "290. Strawberry - 7.50 €"
+            ],
+            icon: "images/kokteyl.jpg"
+        },    
+        burger: {
+            items: [
+                "130. Classic Chicken-Burger (M;G;13;S) - 14.90 € / Salat, Tomaten, Zwiebeln",
+                "131. Cheese Chickenburger (M;G;13;S) - 15.90 € / Salat, Tomaten, Zwiebeln",
+                "132. Chilli-Cheese Chickenburger (M;G;13;S) - 16.90 €",
+                "133. Classic Burger (M;G;13;S) - 15.90 €",
+                "134. Cheeseburger (M;G;13;S) - 16.90 €",
+                "135. Chili-Cheese Burger (M;G;13;S) - 17.90 €",
+                "129. BBQ Burger (M;G;13;S) - 16.90 €",
+                "600. Veggie-Burger (M;G;13;S) - 14.90 €"
+            ],
+            icon: "images/burger.jpg"
+        },
+        ilaveler: {
+            items: [
+                "120. Yoğurt A / Joghurtᴬ - 4.90 €",
+                "121. Bulgur Pilavı / Bulgurreis - 4.90 €",
+                "122. Pilav / Reis - 4.90 €",
+                "123. Steakhouse Pommes mit Saucen - 6.40 €"
+            ],
+            icon: "images/ilaveler.jpg"
+        },
+        pideler: {
+            items: [
+                "94. Lahmacun A / türkische Pizzaᴬ - 6.50 €",
+                "95. Lahmacun Salatalı A / türkische Pizza mit Salatᴬ - 7.50 €",
+                "96. Kaşarlı Pide A / Teigschiffchen mit Goudakäseᴬ - 13.90 €",
+                "97. Kıymalı Pide A / Teigschiffchen mit Hackfleischᴬ - 14.90 €",
+                "98. Sucuklu Pide A / Teigschiffchen mit Knoblauchwurst - 14.90 €",
+                "99. Sebzeli Pide A / Teigschiffchen mit Gemüseᴬ - 14.90 €",
+                "100. Kuşbaşılı Pide A / Teigschiffchen mit Lammfleischstükchenᴬ - 16.90 €"
+            ],
+            icon: "images/pideler.jpg"
+        },
+        yogurtlu: {
+            items: [
+                "80. Ali Nazik G / Lammspieß auf gegrillter Auberginenpaste mit Joghurt - 22.90 €",
+                "81. Beyti Kebap GA / Hackfleischspieß umhüllt von Lavas, garniert mit Joghurt und Tomatensauce - 22.90 €",
+                "82. Yoğurtlu Adana G / Hackfleischspieß auf gerösteten Brotstücken, garniert mit Joghurt und Tomatensauce - 20.90 €",
+                "83. Yoğurtlu Tavuk Şiş / Hähnchenspieß auf gerösteten Brotstücken, garniert mit Joghurt und Tomatensauce - 20.90 €",
+                "84. Mantı GA / klein mit Hackfleisch gefüllter Teigtaschen serviert mit Joghurt und Tomatensauce - 16.90 €",
+                "85. Vejeteryan Mantı GA / Kartoffel gefüllter Teigtaschen serviert mit Joghurt und Tomatensauce - 16.90 €"
+            ],
+            icon: "images/yogurtlu_izgaralar.jpg"
+        },
+        durum: {
+            items: [
+                "90. Tavuk Şiş Dürüm A / Wrap mit Hähnchenspießᴬ - 12.90 €",
+                "91. Adana Dürüm A / Wrap mit Hackfleischspießᴬ - 12.90 €",
+                "92. Kuzu Şiş Dürüm A / Wrap mit Lammspießᴬ - 13.90 €",
+                "93. Falafel Dürüm A - 9.90 €"
+            ],
+            icon: "images/durum.jpg"
+        },
+        sactava: {
+            items: [
+                "110. Tavuk Sac Tava / Hähnchenfleisch mit gebratenen Gemüse - 19.90 €",
+                "111. Kuzu Sac Tava / Lammfleisch mit gebratenen Gemüse - 20.90 €",
+                "112. Sebze Sac Tava / Gemüsepfanne - 17.90 €",
+                "113. Mantar Sac Tava / Champignonpfanne - 17.90 €",
+                "114. Mantar Soslu Tavuk Göğsü / Hähnchenbrust mit Champignon Sahne Sauce und Rosmarinkartoffeln - 17.90 €"
+            ],
+            icon: "images/sac_tava.jpg"
+        },
+        snacks: {
+            items: [
+                "136. Mozzarella Stick 5 Stück C;A - 9.90 €",
+                "137. Chicken Stick 4 Stück C;A - 11.99 €",
+                "138. Snack Box C;A - 12.90 €",
+                "307. Nachos mit Dips - 7.40 €",
+                "307.1 Jalapeños - 0.80 €",
+                "139. Lüx Karışık Cerez H / Nuss-Mixᴴ - 5.90 €",
+                "140. Fındık H / Geröstete Haselnüsseᴴ - 6.90 €",
+                "141. Antep Fıstığı H / Geröstete Pistazienᴴ - 7.90 €"
+            ],
+            icon: "images/snacks.jpg"
+        },
+        hot_drinks: {
+            items: [
+                "250. Cafe Crema - 3.80 €",
+                "251. Cappuccino - 4.50 €",
+                "252. Latte Macchiato - 4.50 €",
+                "253. Türkischer Mocca - 3.80 €",
+                "254. Hot Chocolate + Sahne - 4.80 €",
+                "255. White Chocolate + Sahne - 4.80 €",
+                "256. Türkischer Tee - 2.10 €",
+               "257. Türkischer Tee groß - 3.20 €",
+                "258. Tee mit Frischer Minze - 5.10 €",
+                "259. Tee mit Zitrone und Ingwer - 5.10 €",
+                "260. Beuteltee verschiedene Sorten - 3.40 €",
+                "262. Espresso - 3.80 €"
+            ],
+            icon: "images/sicak_icecekler.jpg"
+        },    
+        desserts: {
+            items: [
+                "300. Triliçe - 6.00 €",
+                "301. Kazandibi - 6.00 €",
+                "302. Sütlaç - 6.00 €",
+                "303. Tiramisu - 6.00 €",
+                "304. Baklava - 6.00 €",
+                "305. Şöbiyet - 6.00 €",
+                "306. Şeker Pare - 6.00 €",
+                "308. Haribo Vegan - 6.40 €",
+                "309. Revani - 6.00 €",
+                "310. Magnolia - 6.00 €",
+                "311. Künefe - 8.00 €",
+                "312. Künefe Kaymaklı Fıstıklı - 9.00 €",
+                "313. Cheesecake - 6.00 €",
+                "314. Lotus Cheesecake - 6.10 €",
+                "315. San Sebastian + Schokoladensauce - 8.40 €",
+                "316. Waffel - 6.40 €",
+                "317. Waffel Nutella - 8.00 €",
+                "318. Waffel Nutella Banane - 8.60 €",
+                "319. Waffel Früchte und Sahne - 9.00 €",
+                "320. Pistazien Cheesecake - 8.40 €",
+                "321. Souffle - 9.40 €",
+                "322. Obstteller - 13.40 €",
+                "323. Katmer - 8.90 €"
+            ],
+            icon: "images/tatlilar.jpg"
+        },
+        makarna: {
+            items: [
+                "500. Tavuklu Mantarlı Krema Soslu / Pasta Pollo - 14.90 €",
+                "501. Penne al Pesto / Penne al Pesto, Basilikum Pesto, Kirschtomaten - 14.90 €",
+                "502. Penne all'Arrabiata / würzige Sauce, getrockneten Chillischoten - 12.90 €"
+            ],
+            icon: "images/makarna.jpg"
+        },
+        cold_drinks: {
+            items: [
+                "200. 2.80 € Stilles Wasser 0,2l",
+                "201. 7.50 € Stilles Wasser 0,75l",
+                "202. 2.80 € Sprudel Wasser 0,2l",
+                "203. 7.50 € Sprudel Wasser 0,75l",
+                "204. 3.20 € Coca Cola 0,2l",
+                "205. 3.20 € Cola Zero 0,2l",
+                "206. 3.20 € Fanta 0,2l",
+                "207. 3.20 € Mezzo Mix 0,2l",
+                "208. 3.20 € Apfelschorle 0,2l",
+                "209. 3.20 € Sprite 0,2l",
+                "210. 2.80 € Ayran 0,2l",
+                "211. 3.80 € Uludağ 0,33l",
+                "212. 3.30 € Şalgam 0,33l",
+                "213. 2.80 € Soda 0,2l",
+                "214. 3.80 € Eistee Maracuja 0,33l",
+                "215. 3.80 € Eistee Pfirsich 0,33l",
+                "216. 3.80 € Eistee Granatapfel 0,33l",
+                "217. 3.80 € Eistee Zitrone 0,33l",
+                "218. 3.80 € Eistee Mango 0,33l",
+                "219. 3.80 € Eistee Blueberry 0,33l",
+                "220. 4.30 € Moloko 0,25l",
+                "221. 4.30 € Moloko Sugarfree 0,25l",
+                "222. 4.30 € Redbull White 0,25l",
+                "223. 4.30 € Redbull Grün 0,25l",
+                "224. 4.30 € Redbull Juneberry 0,25l",
+                "225. 4.30 € Redbull normal 0,25l",
+                "226. 4.30 € Redbull ohne Zucker 0,25l",
+                "227. 4.30 € Redbull Blau 0,25l",
+                "228. 4.30 € Redbull Lila 0,25l",
+                "229. 4.30 € Redbull Orange 0,25l",
+                "230. 6.90 € Eiskaffe 0,4l",
+                "231. 3.20 € Ginger Ale 0,2l"
+            ],
+            icon: "images/soguk_icecekler.jpg"
+        },
+        izgaralar: {
+            items: [
+                "60. Tavuk Şiş - 18.90 €",
+                "61. Köfte Izgara - 18.90 €",
+                "62. Adana Kebap - 18.90 €",
+                "63. Kuzu Şiş - 19.90 €",
+                "64. Tavuk Kanat - 18.90 €",
+                "65. Pirzola - 23.90 €",
+                "66. Kaburga - 22.90 €",
+                "67. Mantar Şiş - 8.90 €",
+                "68. Karışık Izgara - 24.90 €",
+                "69. Falafel Tabağı - 15.90 €"
+            ],
+            icon: "images/izgaralar.jpg"
+        }
+    };
+
+
+        // Dinamik içerik ekleme
+        const menuListDiv = document.getElementById('menuList');
+        if (menuler[kategori]) {
+            // Görsel ekleme
+            const img = document.createElement('img');
+            img.src = menuler[kategori].icon;
+            img.alt = kategori + " icon";
+            img.style.width = "50px"; // Görsel boyutu
+            img.style.height = "50px";
+            img.style.display = "block";
+            img.style.margin = "10px auto";
+            menuListDiv.appendChild(img);
+
+            // Menü öğelerini ekleme
+            const items = menuler[kategori].items || [];
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'menu-item';
+                div.textContent = item;
+                menuListDiv.appendChild(div);
+            });
+        }
+
+        // Geri dönüş fonksiyonu
+        function geriDon() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

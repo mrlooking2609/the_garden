@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Garden - Menü</title>
+
+    <!-- Google Fonts - Retro Tarzı Yazı Tipi -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Temel ayarlar ve arka plan */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/background.jpg'); /* Arka plan resmi */
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam arka plan */
+            color: white;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+        }
+
+        h1 {
+            margin-top: 100px; /* Header'ın altında boşluk bırakıyoruz */
+            color: #007bff;
+            font-size: 28px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); /* Daha yoğun siyah gölge */
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: row; /* Yatay sıralama */
+            justify-content: center; /* Ortadan başla */
+            align-items: center;
+            width: 100%; /* Genişliği %100 yap */
+            max-width: 400px; /* Genişliği sınırlamak için maksimum değer */
+            gap: 10px; /* Butonlar arasında boşluk */
+        }
+
+    .buttons {
+        display: flex;
+        flex-direction: row; /* Yatay sıralama */
+        justify-content: flex-start; /* Soldan başla */
+        align-items: center;
+        width: 100%; /* Mobilde tam genişlik için ayarlandı */
+        max-width: none; /* Genişlik sınırlaması kaldırıldı */
+        gap: 10px; /* Butonlar arasında boşluk */
+    }
+
+
+        button:hover {
+            background-color: rgba(128, 218, 128, 0.7); /* Hover durumunda koyulaşma */
+        }
+
+        .menu-list {
+            display: none; /* Başlangıçta gizli */
+            margin-top: 20px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        /* Görsel butonlar */
+        .menu-button {
+            position: relative;
+            margin: 10px 0;
+            width: 80%; /* Buton genişliği %80 olarak ayarlandı */
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            max-width: 400px; /* Butonun genişliği üst butonlarla aynı yapıldı */
+        }
+
+        .menu-button img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .menu-button span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff5e1; /* Hafif krem bej yazı rengi */
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9);
+            pointer-events: none;
+            background-color: rgba(144, 238, 144, 0.6);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        /* Modal Pencere */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .close {
+            color: black;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Mobil cihazlar için düzenlemeler */
+        @media (max-width: 600px) {
+            .buttons {
+                width: 100%; /* Butonlar tam genişlikte */
+                max-width: 350px; /* Ekran genişliğine göre sınır */
+                flex-direction: column; /* Butonlar dikey sıralansın */
+                gap: 15px; /* Butonlar arasında boşluk */
+                margin-bottom: 20px; /* Alt boşluk eklendi */
+            }
+
+
+            body {
+            margin: 0;
+            padding: 0;
+            width: 100%; /* Ekrana tam oturması için genişlik %100 */
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden; /* Taşmayı önlemek için yatay kaydırmayı kaldırdık */
+        }
+
+            header {
+            font-size: 14px; /* Başlık boyutu biraz daha büyük yapıldı */
+            padding: 5px 0; /* Başlık alt ve üst boşluğu daraltıldı */
+            width: 100%; /* Başlık genişliği %100 ayarlandı */
+        }
+
+            h1 {
+                font-size: 22px;
+                margin-top: 20px;
+            }
+
+            button {
+                width: 100%; /* Butonlar tam genişlikte */
+                max-width: 300px; /* Görsel genişliği ile aynı yapıldı */
+                padding: 12px 22px;
+                border-radius: 8px; /* Kenarları yuvarlatıldı */
+                font-size: 16px;
+                cursor: pointer;
+                transition: transform 0.2s, background 0.3s;
+            }
+
+            .menu-button {
+                width: 100%; /* Menü genişliği %100 yapıldı */
+                max-width: 300px; /* Butonlarla aynı genişlik */
+                cursor: pointer;
+                border-radius: 8px;
+                overflow: hidden;
+                text-align: center;
+            }
+
+            .menu-button span {
+                font-size: 24px;
+                padding: 4px 8px;
+            }
+
+            .modal-content {
+                width: 90%;
+            }
+
+
+        .welcome-image {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto; /* Hoş geldiniz yazısı boyutuna göre */
+        }
+    </style>
+</head>
+<body>
+
+    <header>The Garden</header>
+
+    <!-- Görsel Ekleme -->
+    <img src="images/hosgeldiniz.png" alt="Hoş Geldiniz Görseli" class="welcome-image">
+
+    <h1>Hoş Geldiniz, Masa <span id="masa-numarasi"></span></h1>
+
+    <div class="buttons-wrapper">
+        <!-- Yeni Menü Butonu -->
+        <div class="buttons">
+            <button onclick="scrollToMenu()">Menü</button> <!-- Yeni buton -->
+        </div>
+
+        <!-- Mevcut butonlar -->
+        <div class="buttons">
+            <button onclick="garsonCagir()">Garson Çağır</button>
+            <button onclick="hesapIste()">Hesabı İste</button>
+        </div>
+        <div class="buttons">
+            <button onclick="openGoogleMaps()">Adresimiz</button>
+            <button onclick="openInstagram()">Instagram Hesabımız</button>
+            <button onclick="window.location.href='garson-puanlama.html'">Garsona Puan Ver</button> <!-- Yönlendirme eklenmiş hali -->
+        </div>
+    </div>
+
+
+
+
+    <!-- Menü Alt Kategoriler -->
+    <div class="menu-list" id="menuList" style="display: block;">
+        <div class="menu-button" onclick="openMenuListPage('daily')">
+            <img src="images/günlük_yemekler.jpg" alt="Günlük Yemekler">
+            <span>Günlük Yemekler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('soups')">
+            <img src="images/corbalar.jpg" alt="Çorbalar">
+            <span>Çorbalar</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('mezeler')">
+            <img src="images/mezeler.jpg" alt="Mezeler">
+            <span>Mezeler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('salatalar')">
+            <img src="images/salatalar.jpg" alt="Salatalar">
+            <span>Salatalar</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('izgaralar')">
+            <img src="images/izgaralar.jpg" alt="Izgaralar">
+            <span>Izgaralar</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('yogurtlu')">
+            <img src="images/yogurtlu_izgaralar.jpg" alt="Yoğurtlu Izgaralar">
+            <span>Yoğurtlu Izgaralar</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('durum')">
+            <img src="images/durum.jpg" alt="Dürüm">
+            <span>Dürüm</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('pideler')">
+            <img src="images/pideler.jpg" alt="Pideler">
+            <span>Pideler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('sactava')">
+            <img src="images/sac_tava.jpg" alt="Saç Tavalar">
+            <span>Saç Tava</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('makarna')">
+            <img src="images/makarna.jpg" alt="Makarna">
+            <span>Makarna</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('ilaveler')">
+            <img src="images/ilaveler.jpg" alt="İlaveler">
+            <span>İlaveler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('burger')">
+            <img src="images/burger.jpg" alt="Burger mit Pommes">
+            <span>Burger mit Pommes</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('snacks')">
+            <img src="images/snacks.jpg" alt="Snacks">
+            <span>Snacks</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('cold_drinks')">
+            <img src="images/soguk_icecekler.jpg" alt="Soğuk İçecekler">
+            <span>Soğuk İçecekler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('hot_drinks')">
+            <img src="images/sicak_icecekler.jpg" alt="Sıcak İçecekler">
+            <span>Sıcak İçecekler</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('juices')">
+            <img src="images/meyve_sulari.jpg" alt="Meyve Suları">
+            <span>Meyve Suları</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('desserts')">
+            <img src="images/tatlilar.jpg" alt="Tatlılar">
+            <span>Tatlılar</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('cocktails')">
+            <img src="images/kokteyl.jpg" alt="Kokteyller">
+            <span>Kokteyller</span>
+        </div>
+        <div class="menu-button" onclick="openMenuListPage('shisha')">
+            <img src="images/nargile.jpg" alt="Nargile">
+            <span>Nargile</span>
+        </div>
+    </div>
+
+    <script>
+        // URL'den masa numarasını almak
+        const urlParams = new URLSearchParams(window.location.search);
+        const masaNumarasi = urlParams.get('masa');
+    
+        // Masa numarasını HTML'e eklemek
+        document.getElementById('masa-numarasi').textContent = masaNumarasi;
+
+        // Menü görüntüleme fonksiyonu (alt menüleri göster/gizle)
+        function toggleMenu() {
+            const menuList = document.getElementById('menuList');
+            if (menuList.style.display === "none" || menuList.style.display === "") {
+                menuList.style.display = "block"; // Menü açılıyor
+            } else {
+                menuList.style.display = "none"; // Menü gizleniyor
+            }
+        }
+
+        // Kategori sayfasına yönlendirme
+        function openMenuListPage(kategori) {
+            window.location.href = `menu-list.html?kategori=${kategori}`;
+        }
+
+
+        // Google Maps açma fonksiyonu
+        function openGoogleMaps() {
+            window.open('https://g.co/kgs/x9hZE49', '_blank');
+        }
+
+        // Instagram sayfasına yönlendirme fonksiyonu
+        function openInstagram() {
+            window.open('https://instagram.com/the_garden_koeln', '_blank');
+        }
+
+        // Garsona puan verme fonksiyonu
+        function garsonaPuanVer() {
+            alert('Garsona puan vermek için yönlendiriliyorsunuz.');
+            // Buraya puanlama sistemi kodları entegre edilebilir.
+        }
+
+        // Garson çağırma fonksiyonu
+        function garsonCagir() {
+            alert('Garson çağrıldı, masa numarası: ' + masaNumarasi);
+        }
+
+        // Hesap isteme fonksiyonu
+        function hesapIste() {
+            alert('Hesap isteniyor, masa numarası: ' + masaNumarasi);
+        }
+
+        // Menü kısmına kaydırma fonksiyonu
+        function scrollToMenu() {
+            const menuSection = document.getElementById('menuList'); // Menü kısmının id'si 'menuList'
+            menuSection.scrollIntoView({ behavior: 'smooth' }); // Yumuşak kaydırma
+        }
+
+    </script>
+
+</body>
+</html>

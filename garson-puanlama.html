@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garsona Puan Ver</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .garson-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .garson-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .garson-button:hover {
+            background-color: #0056b3;
+        }
+
+        .star-container {
+            display: flex;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .star {
+            width: 40px;
+            height: 40px;
+            background-color: #ddd;
+            clip-path: polygon(50% 0%, 61% 38%, 100% 38%, 68% 59%, 79% 100%, 50% 75%, 21% 100%, 32% 59%, 0% 38%, 39% 38%);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .star.active {
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Garsona Puan Ver</h1>
+
+    <div class="garson-list">
+        <button class="garson-button" onclick="selectGarson('Garson 1')">Garson 1</button>
+        <button class="garson-button" onclick="selectGarson('Garson 2')">Garson 2</button>
+        <button class="garson-button" onclick="selectGarson('Garson 3')">Garson 3</button>
+        <button class="garson-button" onclick="selectGarson('Garson 4')">Garson 4</button>
+        <button class="garson-button" onclick="selectGarson('Garson 5')">Garson 5</button>
+        <button class="garson-button" onclick="selectGarson('Garson 6')">Garson 6</button>
+    </div>
+
+    <div id="star-rating" class="star-container" style="display:none;">
+        <div class="star" onclick="rateGarson(1)"></div>
+        <div class="star" onclick="rateGarson(2)"></div>
+        <div class="star" onclick="rateGarson(3)"></div>
+        <div class="star" onclick="rateGarson(4)"></div>
+        <div class="star" onclick="rateGarson(5)"></div>
+    </div>
+
+    <script>
+        let selectedGarson = '';
+        let ratings = {};
+
+        function selectGarson(garson) {
+            selectedGarson = garson;
+            document.getElementById('star-rating').style.display = 'flex';
+            alert(garson + ' için puanlama yapın.');
+        }
+
+        function rateGarson(stars) {
+            ratings[selectedGarson] = stars;
+            highlightStars(stars);
+            alert(selectedGarson + ' için ' + stars + ' yıldız verildi.');
+            saveRating(selectedGarson, stars);
+        }
+
+        function highlightStars(stars) {
+            const starElements = document.querySelectorAll('.star');
+            starElements.forEach((star, index) => {
+                if (index < stars) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function saveRating(garson, stars) {
+            // Puanı kaydetmek için gerekli işlemler yapılabilir
+            // Örneğin bir veri tabanına kaydedilebilir veya localStorage kullanılabilir.
+            console.log('Puan kaydedildi: ', garson, stars);
+        }
+    </script>
+
+</body>
+</html>
